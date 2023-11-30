@@ -8,6 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // colors similar to netflix
+      colors: {
+          netflix: {
+            red: '#e50914',
+            black: '#141414',
+            gray: '#757575',
+            white: '#f5f5f1',
+          },
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
