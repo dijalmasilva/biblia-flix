@@ -1,5 +1,8 @@
+'use client'
+
 import Image from "next/image";
 import {LucideInfo} from "lucide-react";
+import Link from "next/link";
 
 type CardBookProps = {
     title: string
@@ -9,7 +12,7 @@ type CardBookProps = {
 
 const CardBook = ({ title, cover, slug}: CardBookProps) => {
     return (
-        <div className="flex flex-col-reverse items-center min-w-[200px]">
+        <Link className="flex flex-col-reverse items-center min-w-[200px]" href={`/${slug}`}>
             <h1 className="font-bold p-2 text-center bg-[#0f0f0f] w-full gap-2 rounded-b flex items-center justify-between">
                 {title}
                 <span>
@@ -24,7 +27,7 @@ const CardBook = ({ title, cover, slug}: CardBookProps) => {
                     fill style={{ objectFit: 'cover' }}
                 />
             </div>
-        </div>
+        </Link>
     )
 }
 
