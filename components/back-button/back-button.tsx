@@ -11,7 +11,7 @@ const BackButton = () => {
     }
 
     return (
-        <div className="flex w-full justify-items-start p-4">
+        <div className="flex p-4">
             <button onClick={back} className="flex gap-1 bg-red-500 px-2 py-1 rounded z-10">
                 <LucideArrowBigLeftDash/>
                 Voltar
