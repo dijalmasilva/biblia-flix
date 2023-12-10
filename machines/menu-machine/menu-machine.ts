@@ -24,8 +24,18 @@ const menuMachine = createMachine({
                 HOME: 'home',
                 SEARCH: 'search',
             }
-        }
+        },
+        book: {
+            on: {
+                HOME: 'home',
+                SEARCH: 'search',
+                MENU: 'menu',
+            }
+        },
     },
+    on: {
+        BOOK: '.book',
+    }
 })
 
 const menuActor = createActor(menuMachine).start();

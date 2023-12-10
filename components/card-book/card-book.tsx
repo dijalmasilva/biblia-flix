@@ -24,6 +24,7 @@ const CardBook = ({ title, cover, slug}: CardBookProps) => {
                     src={cover}
                     className="rounded-t"
                     alt={slug}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     fill style={{ objectFit: 'cover' }}
                 />
             </div>

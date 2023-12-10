@@ -27,8 +27,8 @@ dependencies:
     specifier: ^1.69.5
     version: 1.69.5
   xstate:
-    specifier: 5.0.0-beta.48
-    version: 5.0.0-beta.48
+    specifier: 5.2.1
+    version: 5.2.1
 
 devDependencies:
   '@types/node':
@@ -5060,8 +5060,8 @@ packages:
   /wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
-  /xstate@5.0.0-beta.48:
-    resolution: {integrity: sha512-L+JKsauxeuGg3KS732bCXhh9mBIj32s595R3bWH8TQqxZztPOw+eM80x8YgWxF5LJYU/cc1BoZpCG/D+UoX5wg==}
+  /xstate@5.2.1:
+    resolution: {integrity: sha512-qPYPnoYIvNSwSv4uIwV+V/uFeGk6houLGmZy0io1XsfImBrp1AKbw9ADNJytCksCDP/YOAg1EtiWjXFzsT1rdw==}
     dev: false
 
   /yallist@3.1.1:

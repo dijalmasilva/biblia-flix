@@ -2,6 +2,7 @@ import type {Metadata} from 'next'
 import {Roboto} from 'next/font/google'
 import 'app/globals.scss'
 import Favicon from './favicon.ico'
+import MenuBar from "@/components/menu-bar/menu-bar";
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -22,7 +23,11 @@ export default function RootLayout({
 }) {
     return (
         <html lang="pt-br">
-        <body className={roboto.className}>{children}</body>
+        <body className={roboto.className}>
+            {children}
+            <MenuBar/>
+            <div className="mb-20"/>
+        </body>
         </html>
     )
 }
