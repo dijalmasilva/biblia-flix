@@ -34,7 +34,7 @@ const MenuBar = () => {
     const path = usePathname();
     const [option, setOption] = useState<MenuOptions>(MenuOptions.HOME)
 
-    menuActor.subscribe((state: { value: MenuOptions; }) => {
+    menuActor.subscribe((state: any) => {
         setOption(state.value as MenuOptions)
         if (state.value === MenuOptions.SEARCH) {
             router.push('/search');
