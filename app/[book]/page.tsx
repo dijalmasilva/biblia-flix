@@ -12,7 +12,7 @@ const BookPage = ({params}: { params: { book: string } }) => {
     if (!book) {
         return (
             <div>
-                <h1>Book not found</h1>
+                <h1>Livro não encontrado</h1>
             </div>
         )
     }
