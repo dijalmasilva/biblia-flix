@@ -3,6 +3,7 @@ import BackButton from "@/components/back-button/back-button";
 import LazyImage from "@/components/lazy-image/lazy-image";
 import {hasQuiz} from "@/quizzes/quizzes";
 import Link from "next/link";
+import ScrollAutomate from "@/components/scroll-automate/scroll-automate";
 
 const ChapterPage = ({params}: {
   params: { book: string, chapter: number }
@@ -31,12 +32,13 @@ const ChapterPage = ({params}: {
   }
 
   return (
-    <div className="h-screen-without-menu-bar relative">
+
+    <div id="chapter" className="h-screen-without-menu-bar relative">
       <LazyImage book={params.book} chapter={params.chapter} objectFit="cover"
                  className="z-[-1]"/>
       <div className="absolute inset-0 bg-black bg-opacity-[0.5] z-[-1]"/>
       <div className="h-screen-without-menu-bar">
-        <div className="flex flex-col overflow-y-auto h-screen-without-menu-bar w-full px-4">
+        <ScrollAutomate bookAbbrev={params.book} chapterNumber={params.chapter}>
           <div className="flex w-full justify-items-start">
             <BackButton/>
           </div>
@@ -58,12 +60,13 @@ const ChapterPage = ({params}: {
           <div className="w-full flex justify-center items-center">
             <BackButton/>
             {hasQuiz(params.book, params.chapter) && (
-              <Link href={`/${params.book}/${params.chapter}/quiz`} className="flex gap-1 bg-red-500 px-2 py-1 rounded z-10">
+              <Link href={`/${params.book}/${params.chapter}/quiz`}
+                    className="flex gap-1 bg-red-500 px-2 py-1 rounded z-10">
                 Acessar quiz
               </Link>
             )}
           </div>
-        </div>
+        </ScrollAutomate>
       </div>
     </div>
   )
