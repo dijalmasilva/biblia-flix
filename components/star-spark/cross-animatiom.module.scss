@@ -1,0 +1,46 @@
+// create animation to svg star like a spark
+
+.crossBeat {
+  animation: cross-beat 1s ease-in-out infinite;
+  width: 32px;
+  height: 32px;
+}
+
+.explode {
+  animation: explode 3s ease-in-out 1;
+  width: 32px;
+  height: 32px;
+}
+
+@keyframes cross-beat {
+  0% {
+    transform: scale(1);
+    fill: saddlebrown;
+    stroke: sandybrown;
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+    fill: saddlebrown;
+    stroke: sandybrown;
+  }
+}
+
+@keyframes explode {
+  0% {
+    transform: scale(1);
+    fill: saddlebrown;
+    stroke: sandybrown;
+  }
+  50% {
+    transform: translateX(-35vw) translateY(40vh) scale(3.5);
+  }
+  100% {
+    transform: scale(1);
+    fill: saddlebrown;
+    stroke: sandybrown;
+  }
+}
+

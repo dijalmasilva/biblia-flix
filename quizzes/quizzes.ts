@@ -13,11 +13,12 @@ export type QuestionType = {
 export type QuizType = {
     title: string,
     questions: QuestionType[]
+    requiredRead: string[],
 }
 
 const quizzes: Record<string, Record<number, QuizType>> = {
     gn: {
-        3: gn3
+        3: gn3,
     }
 }
 
@@ -25,7 +26,7 @@ export const getQuiz = (bookAbbrev: string, reference: number): QuizType => {
     try {
         return quizzes[bookAbbrev][reference]
     } catch (e) {
-        return { title: '', questions: [] }
+        return { title: '', questions: [], requiredRead: []}
     }
 }
 

@@ -1,8 +1,6 @@
 import {getBookByAbbrev} from "@/helpers/bible-helper/bible-helper";
 import BackButton from "@/components/back-button/back-button";
 import LazyImage from "@/components/lazy-image/lazy-image";
-import {hasQuiz} from "@/quizzes/quizzes";
-import Link from "next/link";
 import ScrollAutomate from "@/components/scroll-automate/scroll-automate";
 
 const ChapterPage = ({params}: {
@@ -59,12 +57,6 @@ const ChapterPage = ({params}: {
           </div>
           <div className="w-full flex justify-center items-center">
             <BackButton/>
-            {hasQuiz(params.book, params.chapter) && (
-              <Link href={`/${params.book}/${params.chapter}/quiz`}
-                    className="flex gap-1 bg-red-500 px-2 py-1 rounded z-10">
-                Acessar quiz
-              </Link>
-            )}
           </div>
         </ScrollAutomate>
       </div>

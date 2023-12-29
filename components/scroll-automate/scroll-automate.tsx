@@ -1,6 +1,7 @@
 'use client'
 
 import {useEffect, useRef, useState} from "react";
+import ModalQuiz from "@/components/modal/modal-quiz";
 
 type Props = {
   children: React.ReactNode;
@@ -11,9 +12,18 @@ type Props = {
 
 const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props) => {
   const [isScrolling, setIsScrolling] = useState(true);
+  const [checkQuiz, setCheckQuiz] = useState(false);
+  const [countTryQuiz, setCountTryQuiz] = useState(0);
   const scrollContainerRef = useRef<any>(null);
 
   const onFinishScroll = () => {
+    if (countTryQuiz < 1) {
+      setTimeout(() => {
+        setCheckQuiz(true);
+        setCountTryQuiz(countTryQuiz + 1);
+      }, 2000)
+    }
+
     const pattern = `${bookAbbrev}-${chapterNumber}`;
     const read = localStorage.getItem(`read`)
     if (read) {
@@ -74,8 +84,13 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
     };
   }, [isScrolling, bookAbbrev, chapterNumber]); // Dependências do efeito
 
-  return <div className={className ?? 'flex flex-col overflow-y-auto h-screen-without-menu-bar w-full px-4'}
-              ref={scrollContainerRef}>{children}</div>;
+  return (
+    <div className={className ?? 'flex flex-col overflow-y-auto h-screen-without-menu-bar w-full px-4'}
+         ref={scrollContainerRef}>
+      <ModalQuiz abbrev={bookAbbrev} chapter={chapterNumber} checkQuiz={checkQuiz}/>
+      {children}
+    </div>
+  );
 };
 
 export default ScrollAutomate;

@@ -6,6 +6,7 @@ import {toRandomOptions} from "@/helpers/array-helper/array-helper";
 
 const quiz: QuizType = {
   title: 'Quiz - Gênesis 1 ao 3',
+  requiredRead: ['gn-1', 'gn-2', 'gn-3'],
   questions: [
     {
       id: 1,

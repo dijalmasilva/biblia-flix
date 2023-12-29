@@ -17,6 +17,23 @@ const SlideQuiz = ({quiz}: { quiz: QuizType }) => {
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(0)
   const [state, setState] = useState<'question' | 'result'>('question')
 
+  useEffect(() => {
+    if (state === 'result') {
+      if (localStorage) {
+        const quizzesDone = localStorage.getItem('quizzes');
+        if (!quizzesDone) {
+          localStorage.setItem('quizzes', JSON.stringify([]));
+        }
+
+        const quizzes = JSON.parse(quizzesDone || '[]');
+        if (!quizzes.includes(quiz.title)) {
+          quizzes.push(quiz.title);
+          localStorage.setItem('quizzes', JSON.stringify(quizzes));
+        }
+      }
+    }
+  }, [state]);
+
   actorQuizMachine.subscribe((state) => {
     const {context} = state
     setState(state.value as 'question' | 'result')
