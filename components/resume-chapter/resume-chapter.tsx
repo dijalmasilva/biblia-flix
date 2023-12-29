@@ -2,24 +2,33 @@
 
 import Link from "next/link";
 import LazyImage from "@/components/lazy-image/lazy-image";
+import {useEffect, useState} from "react";
 
 type ResumeChapterProps = {
     book: string
     chapter: number
     verses: number
     description: string
-    qtdRead?: number
 }
 
 const imageWidth = 150
 
-const getRedBarWidth = (readValue: number, totalVerses: number) => {
-    const width = imageWidth * readValue / totalVerses
-    return width.toFixed(2);
-}
+const ResumeChapter = ({chapter, verses, description, book}: ResumeChapterProps) => {
+    const [alreadyRead, setAlreadyRead] = useState(false)
 
-const ResumeChapter = ({chapter, verses, description, qtdRead, book}: ResumeChapterProps) => {
-    const percentOfRead = getRedBarWidth(qtdRead || 0, verses)
+    useEffect(() => {
+        if (localStorage) {
+            const readChapters = localStorage.getItem('read') || ''
+            if (!readChapters) return;
+
+            const chapters = JSON.parse(readChapters) as string[];
+            const pattern = `${book}-${chapter}`
+
+            if (chapters.find(chapter => chapter === pattern)) {
+                setAlreadyRead(true)
+            }
+        }
+    }, []);
 
     return (
         <Link className="flex flex-col gap-2" href={`/${book}/${chapter}`}>
@@ -27,9 +36,9 @@ const ResumeChapter = ({chapter, verses, description, qtdRead, book}: ResumeChap
                 <div className={`h-[90px] relative`} style={{width: `${imageWidth}px`}}>
                     <LazyImage book={book} chapter={chapter} fallback={`/assets/books/loading-content.png`} />
                     {
-                        qtdRead && (
+                        alreadyRead && (
                             <div className={`bg-red-500 h-1 absolute bottom-0 left-0`}
-                                 style={{width: `${percentOfRead}px`}}/>
+                                 style={{width: `${imageWidth}px`}}/>
                         )
                     }
                 </div>

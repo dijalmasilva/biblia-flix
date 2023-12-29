@@ -1,10 +1,7 @@
-import MenuBar from "@/components/menu-bar/menu-bar";
 import Header from "@/components/header/header";
 import CardBook from "@/components/card-book/card-book";
-import Image from "next/image";
-import {LucideInfo, LucidePlay, LucidePlus} from "lucide-react";
 import SectionBook from "@/components/section-book/section-book";
-import PresentationBook from "@/components/presentation-book/presentation-book";
+import LastRead from "@/components/last-read/last-read";
 
 export default function Home() {
 
@@ -12,7 +9,7 @@ export default function Home() {
         <main className="main">
             <div className="relative">
                 <Header />
-                <PresentationBook hasBack={false} image="/assets/covers/mt.png" slug="mt" title="Mateus" />
+                <LastRead />
             </div>
             <SectionBook title="Pentateuco">
                 <CardBook title="Gênesis" cover="/assets/covers/gn.png" slug="gn" />
