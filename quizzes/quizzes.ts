@@ -22,9 +22,17 @@ const quizzes: Record<string, Record<number, QuizType>> = {
 }
 
 export const getQuiz = (bookAbbrev: string, reference: number): QuizType => {
-    return quizzes[bookAbbrev][reference] || { title: '', questions: [] }
+    try {
+        return quizzes[bookAbbrev][reference]
+    } catch (e) {
+        return { title: '', questions: [] }
+    }
 }
 
 export const hasQuiz = (bookAbbrev: string, reference: number): boolean => {
-    return !!quizzes[bookAbbrev][reference]
+    try {
+        return !!quizzes[bookAbbrev][reference]
+    } catch (e) {
+        return false
+    }
 }

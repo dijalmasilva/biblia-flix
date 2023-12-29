@@ -7,7 +7,11 @@ const BackButton = () => {
     const router = useRouter()
 
     const back = () => {
-        router.back();
+        if (window.history?.length) {
+            router.back();
+        } else {
+            router.push('/')
+        }
     }
 
     return (
