@@ -3,10 +3,17 @@
 import {QuizType} from "@/quizzes/quizzes";
 import actorQuizMachine from "@/machines/quiz-machine/quiz-machine";
 import {useEffect, useState} from "react";
-import {canShareVerify, dataURLtoFile, shareFile} from "@/helpers/share-helper/share-helper";
+import {dataURLtoFile} from "@/helpers/share-helper/share-helper";
 import {toJpeg} from "html-to-image";
+import {USER_TAG} from "@/components/validate-user/validate-user";
 
 const SlideQuiz = ({quiz}: { quiz: QuizType }) => {
+  let christianName;
+  try {
+    christianName = localStorage.getItem(USER_TAG) || 'Irmão'
+  } catch (e) {
+    christianName = 'Irmão'
+  }
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(0)
   const [state, setState] = useState<'question' | 'result'>('question')
 
@@ -60,24 +67,15 @@ const SlideQuiz = ({quiz}: { quiz: QuizType }) => {
   };
 
   const downloadFile = (file: any) => {
-    // Criar um URL para o arquivo
     const url = window.URL.createObjectURL(file);
-
-    // Criar um elemento de link `a`
     const link = document.createElement('a');
     link.href = url;
     link.download = `${quiz.title.replace(' ', '_').toLowerCase()}.png`; // Define o nome do arquivo para download
 
     // Anexar o link ao body (necessário para alguns navegadores)
     document.body.appendChild(link);
-
-    // Simular um clique no link para iniciar o download
     link.click();
-
-    // Remover o link após o download
     document.body.removeChild(link);
-
-    // Liberar o objeto URL
     window.URL.revokeObjectURL(url);
   };
 
@@ -101,10 +99,10 @@ const SlideQuiz = ({quiz}: { quiz: QuizType }) => {
       )}
       {state === 'result' && (
         <>
-          <div id="result" className="flex flex-col gap-2">
-            <div className="text-center">
-              <h1 className="font-bold text-xl">Você
-                acertou {countCorrectAnswers()} de {quiz.questions.length} questões</h1>
+          <div className="flex flex-col gap-2">
+            <div id="result" className="text-center">
+              <h1 className="font-bold text-xl">
+                {christianName}, você acertou {countCorrectAnswers()} de {quiz.questions.length} questões!</h1>
             </div>
             <div className="flex flex-col gap-2">
               {

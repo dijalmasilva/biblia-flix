@@ -3,6 +3,7 @@ import {Roboto} from 'next/font/google'
 import 'app/globals.scss'
 import Favicon from './favicon.ico'
 import MenuBar from "@/components/menu-bar/menu-bar";
+import ValidateUser from "@/components/validate-user/validate-user";
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -24,6 +25,7 @@ export default function RootLayout({
     return (
         <html lang="pt-br">
         <body className={roboto.className}>
+            <ValidateUser />
             {children}
             <MenuBar/>
             <div className="mb-20"/>
