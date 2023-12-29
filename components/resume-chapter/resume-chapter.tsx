@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import LazyImage from "@/components/lazy-image/lazy-image";
-import {useEffect, useState} from "react";
+import RedBar from "@/components/red-bar/red-bar";
 
 type ResumeChapterProps = {
     book: string
@@ -14,33 +14,13 @@ type ResumeChapterProps = {
 const imageWidth = 150
 
 const ResumeChapter = ({chapter, verses, description, book}: ResumeChapterProps) => {
-    const [alreadyRead, setAlreadyRead] = useState(false)
-
-    useEffect(() => {
-        if (localStorage) {
-            const readChapters = localStorage.getItem('read') || ''
-            if (!readChapters) return;
-
-            const chapters = JSON.parse(readChapters) as string[];
-            const pattern = `${book}-${chapter}`
-
-            if (chapters.find(chapter => chapter === pattern)) {
-                setAlreadyRead(true)
-            }
-        }
-    }, []);
 
     return (
         <Link className="flex flex-col gap-2" href={`/${book}/${chapter}`}>
             <div className="flex gap-3">
                 <div className={`h-[90px] relative`} style={{width: `${imageWidth}px`}}>
                     <LazyImage book={book} chapter={chapter} fallback={`/assets/books/loading-content.png`} />
-                    {
-                        alreadyRead && (
-                            <div className={`bg-red-500 h-1 absolute bottom-0 left-0`}
-                                 style={{width: `${imageWidth}px`}}/>
-                        )
-                    }
+                    <RedBar imageWidth={imageWidth} bookAbbreviation={book} chapter={chapter} />
                 </div>
                 <div className="flex flex-col justify-center">
                     <h1>{`Capítulo ${chapter}`}</h1>

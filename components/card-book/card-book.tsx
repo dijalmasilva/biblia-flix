@@ -3,6 +3,7 @@
 import Image from "next/image";
 import {LucideInfo} from "lucide-react";
 import Link from "next/link";
+import RedBar from "@/components/red-bar/red-bar";
 
 type CardBookProps = {
     title: string
@@ -27,7 +28,9 @@ const CardBook = ({ title, cover, slug}: CardBookProps) => {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     fill style={{ objectFit: 'cover' }}
                 />
+                <RedBar imageWidth={200} bookAbbreviation={slug} isBook />
             </div>
+
         </Link>
     )
 }
