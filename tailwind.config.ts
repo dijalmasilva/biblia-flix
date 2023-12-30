@@ -24,7 +24,16 @@ const config: Config = {
       },
       height: {
         'screen-without-menu-bar': 'calc(100vh - 72px)',
-      }
+      },
+      keyframes: {
+        'beat': {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.5)' },
+        },
+      },
+      animation: {
+        'beat': 'beat 1s ease-in-out infinite',
+      },
     },
   },
   plugins: [],

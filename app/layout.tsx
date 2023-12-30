@@ -4,6 +4,8 @@ import 'app/globals.scss'
 import Favicon from './favicon.ico'
 import MenuBar from "@/components/menu-bar/menu-bar";
 import ValidateUser from "@/components/validate-user/validate-user";
+import {Suspense} from "react";
+import LoadingPage from "@/app/loading";
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -26,7 +28,9 @@ export default function RootLayout({
         <html lang="pt-br">
         <body className={roboto.className}>
             <ValidateUser />
-            {children}
+            <Suspense fallback={<LoadingPage />}>
+                {children}
+            </Suspense>
             <MenuBar/>
             <div className="mb-20"/>
         </body>

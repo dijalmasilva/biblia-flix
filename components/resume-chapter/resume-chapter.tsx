@@ -3,6 +3,8 @@
 import Link from "next/link";
 import LazyImage from "@/components/lazy-image/lazy-image";
 import RedBar from "@/components/red-bar/red-bar";
+import {Suspense} from "react";
+import ImageFallback from "@/components/image-fallback/image-fallback";
 
 type ResumeChapterProps = {
     book: string
@@ -19,7 +21,9 @@ const ResumeChapter = ({chapter, verses, description, book}: ResumeChapterProps)
         <Link className="flex flex-col gap-2" href={`/${book}/${chapter}`}>
             <div className="flex gap-3">
                 <div className={`h-[90px] relative`} style={{width: `${imageWidth}px`}}>
-                    <LazyImage book={book} chapter={chapter} fallback={`/assets/books/loading-content.png`} />
+                    <Suspense fallback={<ImageFallback width={`${imageWidth}px`} height="90px" />}>
+                      <LazyImage book={book} chapter={chapter} fallback={`/assets/books/loading-content.png`} />
+                    </Suspense>
                     <RedBar imageWidth={imageWidth} bookAbbreviation={book} chapter={chapter} />
                 </div>
                 <div className="flex flex-col justify-center">

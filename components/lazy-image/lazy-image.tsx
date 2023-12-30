@@ -2,30 +2,34 @@
 
 import {useEffect, useState} from "react";
 import Image from "next/image";
+import ImageFallback from "@/components/image-fallback/image-fallback";
 
 type LazyImageProps = {
-    book: string
-    chapter: number
-    fallback?: string
-    className?: string
-    objectFit?: 'cover' | 'contain'
+  book: string
+  chapter: number
+  fallback?: string
+  className?: string
+  objectFit?: 'cover' | 'contain'
 }
 
 const LazyImage = ({fallback, chapter, book, className, objectFit = 'cover'}: LazyImageProps) => {
 
-    const [image, setImage] = useState<string | any>(fallback)
+  const [image, setImage] = useState<string | any>('')
 
-    useEffect(() => {
-        import((`../../public/assets/books/${book}/${book}-${chapter}.png`)).then(image => {
-            setImage(image.default.src)
-        }).catch(() => {
-        })
-    }, [chapter, book])
+  useEffect(() => {
+    import((`../../public/assets/books/${book}/${book}-${chapter}.png`)).then(image => {
+      setImage(image.default.src)
+    }).catch(() => {
+      setImage(fallback)
+    })
+  }, [chapter, book, fallback])
 
-    if (!image) return <></>
+  if (!image) return <ImageFallback width="100%" height="100%" />
 
-    return <Image src={image} alt={book} fill style={{objectFit}}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className={className}/>
+  return (
+    <Image src={image} alt={book} fill style={{objectFit}}
+           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className={className}/>
+  )
 }
 
 export default LazyImage

@@ -5,6 +5,8 @@ import {LucidePlay} from "lucide-react";
 import {useRouter} from "next/navigation";
 import {BookType} from "@/models/book";
 import RedBar from "@/components/red-bar/red-bar";
+import {Suspense} from "react";
+import ImageFallback from "@/components/image-fallback/image-fallback";
 
 type SearchBookProps = {
   slug: string;
@@ -14,7 +16,6 @@ type SearchBookProps = {
 const SearchBook = ({slug, title}: SearchBookProps) => {
   const router = useRouter()
   const onClick = () => {
-    console.log(localStorage)
     if (localStorage) {
       let searchStorage = localStorage.getItem('recent-books')
       if (!searchStorage) {
@@ -38,8 +39,10 @@ const SearchBook = ({slug, title}: SearchBookProps) => {
   return (
     <div className="flex bg-[#424242] w-full cursor-pointer" onClick={onClick}>
       <div className="w-[220px] h-[80px] relative">
-        <Image src={`/assets/covers/${slug}.png`} alt={slug} fill style={{objectFit: 'cover'}}
-               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"/>
+        <Suspense fallback={<ImageFallback width="220px" height="80px" />}>
+          <Image src={`/assets/covers/${slug}.png`} alt={slug} fill style={{objectFit: 'cover'}}
+                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"/>
+        </Suspense>
         <RedBar imageWidth={220} bookAbbreviation={slug} isBook/>
       </div>
       <div className="flex items-center justify-between w-full px-4">
