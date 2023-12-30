@@ -2,6 +2,7 @@
 
 import {useEffect, useRef, useState} from "react";
 import ModalQuiz from "@/components/modal/modal-quiz";
+import ControlScroll, {ControlScrollOptions} from "@/components/control-scroll/control-scroll";
 
 type Props = {
   children: React.ReactNode;
@@ -15,6 +16,10 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
   const [checkQuiz, setCheckQuiz] = useState(false);
   const [countTryQuiz, setCountTryQuiz] = useState(0);
   const scrollContainerRef = useRef<any>(null);
+  const [scrollOptions, setScrollOptions] = useState<ControlScrollOptions>({
+    isScrolling: false,
+    speed: 1
+  })
 
   const onFinishScroll = () => {
     if (countTryQuiz < 1) {
@@ -71,7 +76,7 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
 
     const scrollInterval = isScrolling ? setInterval(() => {
       if (scrollContainer) {
-        scrollContainer.scrollBy(0, 1);
+        scrollContainer.scrollBy(0, scrollOptions.isScrolling ? scrollOptions.speed : 0);
       }
     }, 100) : null;
 
@@ -82,11 +87,18 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
         scrollContainer.removeEventListener("scroll", handleScroll);
       }
     };
-  }, [isScrolling, bookAbbrev, chapterNumber]); // Dependências do efeito
+  }, [isScrolling, bookAbbrev, chapterNumber, scrollOptions]); // Dependências do efeito
+
+  useEffect(() => {
+    setTimeout(() => {
+      setScrollOptions({...scrollOptions, isScrolling: true})
+    }, 1000)
+  }, []);
 
   return (
     <div className={className ?? 'flex flex-col overflow-y-auto h-screen-without-menu-bar w-full px-4'}
          ref={scrollContainerRef}>
+      <ControlScroll onChange={setScrollOptions} />
       <ModalQuiz abbrev={bookAbbrev} chapter={chapterNumber} checkQuiz={checkQuiz}/>
       {children}
     </div>
