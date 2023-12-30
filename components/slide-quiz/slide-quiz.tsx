@@ -106,7 +106,7 @@ const SlideQuiz = ({quiz}: { quiz: QuizType }) => {
               currentQuestion.options.map((option, index) => {
                 return (
                   <div key={index.toString()}>
-                    <button className="w-full px-2 py-4 bg-red-400" onClick={() => onAnswer(option)}>{option}</button>
+                    <button className="w-full px-2 py-4 bg-red-500" onClick={() => onAnswer(option)}>{option}</button>
                   </div>
                 )
               })
@@ -126,7 +126,7 @@ const SlideQuiz = ({quiz}: { quiz: QuizType }) => {
                 quiz.questions.map((question, index) => {
                   return (
                     <div key={index.toString()}
-                         className={`flex flex-col px-2 py-4 rounded w-full gap-2 ${isCorrect(question.answer, index) ? 'bg-green-600' : 'bg-red-400'}`}>
+                         className={`flex flex-col px-2 py-4 rounded w-full gap-2 ${isCorrect(question.answer, index) ? 'bg-green-600' : 'bg-red-500'}`}>
                       <h2 className="font-bold text-xl">{question.question}</h2>
                       <hr/>
                       {!isCorrect(question.answer, index) &&

@@ -2,8 +2,13 @@
 
 import {LucideArrowBigLeftDash} from "lucide-react";
 import {useRouter} from "next/navigation";
+import Button from "@/components/button/button";
 
-const BackButton = () => {
+type Props = {
+    size?: 'small' | 'medium'
+}
+
+const BackButton = ({ size = 'small' }: Props) => {
     const router = useRouter()
 
     const back = () => {
@@ -16,10 +21,10 @@ const BackButton = () => {
 
     return (
         <div className="flex p-4">
-            <button onClick={back} className="flex gap-1 bg-red-500 px-2 py-1 rounded z-10">
-                <LucideArrowBigLeftDash/>
+            <Button onClick={back} size={size} className="z-10">
+                <LucideArrowBigLeftDash size={size === 'small' ? 20 : 28} />
                 Voltar
-            </button>
+            </Button>
         </div>
     )
 }

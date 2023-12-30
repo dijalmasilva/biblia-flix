@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {getQuiz, hasQuiz, QuizType} from "@/quizzes/quizzes";
 import Link from "next/link";
 import CrossAnimationIcon from "@/components/star-spark/cross-animation-icon";
+import Button from "@/components/button/button";
 
 type Props = {
   abbrev: string;
@@ -58,12 +59,12 @@ const ModalQuiz = ({ abbrev, chapter, checkQuiz }: Props) => {
       {!showModal && quizAvailable && (
         <div className="fixed top-4 right-5 z-30">
           <div className="flex justify-center">
-            <button
-              className="bg-red-500 px-4 py-2 rounded text-center w-[64px] h-[48px]"
+            <Button
+              className="w-[64px] h-[48px]"
               onClick={() => setShowModal(true)}
             >
               <CrossAnimationIcon />
-            </button>
+            </Button>
           </div>
         </div>
       )}

@@ -2,6 +2,7 @@ import {getBookByAbbrev} from "@/helpers/bible-helper/bible-helper";
 import BackButton from "@/components/back-button/back-button";
 import LazyImage from "@/components/lazy-image/lazy-image";
 import ScrollAutomate from "@/components/scroll-automate/scroll-automate";
+import NextChapterButton from "@/components/next-chapter-button/next-chapter-button";
 
 const ChapterPage = ({params}: {
   params: { book: string, chapter: number }
@@ -33,8 +34,8 @@ const ChapterPage = ({params}: {
 
     <div id="chapter" className="h-screen-without-menu-bar relative">
       <LazyImage book={params.book} chapter={params.chapter} objectFit="cover"
-                 className="z-[-1]"/>
-      <div className="absolute inset-0 bg-black bg-opacity-[0.5] z-[-1]"/>
+                 className="z-[-1]" fallback="/assets/books/bg-cross.png" />
+      <div className="absolute inset-0 bg-black bg-opacity-[0.6] z-[-1]"/>
       <div className="h-screen-without-menu-bar">
         <ScrollAutomate bookAbbrev={params.book} chapterNumber={params.chapter}>
           <div className="flex w-full justify-items-start">
@@ -56,7 +57,8 @@ const ChapterPage = ({params}: {
             }
           </div>
           <div className="w-full flex justify-center items-center">
-            <BackButton/>
+            <BackButton size="medium" />
+            <NextChapterButton abbrev={params.book} chapter={params.chapter} />
           </div>
         </ScrollAutomate>
       </div>

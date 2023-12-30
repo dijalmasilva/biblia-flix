@@ -6,6 +6,7 @@ import {useRouter} from "next/navigation";
 import BackButton from "@/components/back-button/back-button";
 import {Suspense} from "react";
 import ImageFallback from "@/components/image-fallback/image-fallback";
+import Button from "@/components/button/button";
 
 type PresentationBookProps = {
   image: string;
@@ -43,11 +44,10 @@ const PresentationBook = ({
         <div className="flex w-full justify-evenly">
           {
             !hideRead && (
-              <button onClick={onRead}
-                      className="flex gap-2 py-2 min-w-[100px] justify-center items-center bg-gray-300 text-black rounded-lg">
+              <Button onClick={onRead} size="medium">
                 <LucidePlay fill="black"/>
                 <span className="font-bold text-xl">Ler</span>
-              </button>
+              </Button>
             )
           }
           {

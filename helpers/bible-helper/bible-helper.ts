@@ -30,3 +30,13 @@ export const getBooksByName = (bookName: string, limit = 5, version: BibleVersio
   }
   return bibleFiltered
 }
+
+export const hasNextChapter = (abbrev: string, chapter: number, version: BibleVersion = 'nvi'): boolean => {
+  const book = getBookByAbbrev(abbrev, version)
+  if (book && book.chapters) {
+    const nextChapter = chapter + 1
+    return book.chapters.length >= nextChapter
+  }
+
+  return false;
+}
