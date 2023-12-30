@@ -10,10 +10,23 @@ export type BibleVersion = 'aa' | 'acf' | 'nvi'
 type BookAbbrevReturn = BookType | undefined
 
 export const getBookByAbbrev = (abbrev: string, version: BibleVersion = 'nvi'): BookAbbrevReturn => {
-    let bible: BookType[] = nvi
-    if (version !== 'nvi') {
-        bible = version === 'aa' ? aa : acf
-    }
+  let bible: BookType[] = nvi
+  if (version !== 'nvi') {
+    bible = version === 'aa' ? aa : acf
+  }
 
-    return bible.find(book => book.abbrev === abbrev)
+  return bible.find(book => book.abbrev === abbrev)
+}
+
+export const getBooksByName = (bookName: string, limit = 5, version: BibleVersion = 'nvi'): BookType[] => {
+  let bible: BookType[] = nvi;
+  if (version !== 'nvi') {
+    bible = version === 'aa' ? aa : acf
+  }
+
+  let bibleFiltered = bible.filter(book => book.name.toLowerCase().includes(bookName.toLowerCase())) || []
+  if (limit > 0 && bibleFiltered.length > limit) {
+    bibleFiltered = bibleFiltered.filter((book, index) => index + 1 <= limit)
+  }
+  return bibleFiltered
 }
