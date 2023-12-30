@@ -11,8 +11,13 @@ type Props = {
   className?: string;
 };
 
+const speeds = {
+  1: 1,
+  2: 1.5,
+  3: 2,
+}
+
 const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props) => {
-  const [isScrolling, setIsScrolling] = useState(true);
   const [checkQuiz, setCheckQuiz] = useState(false);
   const [countTryQuiz, setCountTryQuiz] = useState(0);
   const scrollContainerRef = useRef<any>(null);
@@ -22,6 +27,7 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
   })
 
   const onFinishScroll = () => {
+    console.log('finish scroll')
     if (countTryQuiz < 1) {
       setTimeout(() => {
         setCheckQuiz(true);
@@ -34,8 +40,9 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
     if (read) {
       try {
         const readObject = JSON.parse(read) as string[]
-        if (readObject.find((item) => item === pattern)) return;
-        readObject.push(pattern)
+        if (!readObject.find((item) => item === pattern)) {
+          readObject.push(pattern)
+        }
         localStorage.setItem(`read`, JSON.stringify(readObject))
       } catch (e) {
         console.error(e)
@@ -44,8 +51,9 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
       localStorage.setItem(`read`, JSON.stringify([pattern]))
     }
 
+    console.log('change last-read')
     localStorage.setItem(`last-read`, `${bookAbbrev}-${chapterNumber}`);
-    setIsScrolling(false);
+    setScrollOptions({...scrollOptions, isScrolling: false })
   }
 
   useEffect(() => {
@@ -74,9 +82,9 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
       scrollContainer.addEventListener("scroll", handleScroll);
     }
 
-    const scrollInterval = isScrolling ? setInterval(() => {
+    const scrollInterval = scrollOptions.isScrolling ? setInterval(() => {
       if (scrollContainer) {
-        scrollContainer.scrollBy(0, scrollOptions.isScrolling ? scrollOptions.speed : 0);
+        scrollContainer.scrollBy(0, scrollOptions.isScrolling ? speeds[scrollOptions.speed] : 0);
       }
     }, 100) : null;
 
@@ -87,7 +95,7 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
         scrollContainer.removeEventListener("scroll", handleScroll);
       }
     };
-  }, [isScrolling, bookAbbrev, chapterNumber, scrollOptions]); // Dependências do efeito
+  }, [bookAbbrev, chapterNumber, scrollOptions]); // Dependências do efeito
 
   useEffect(() => {
     setTimeout(() => {
@@ -98,7 +106,7 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
   return (
     <div className={className ?? 'flex flex-col overflow-y-auto h-screen-without-menu-bar w-full px-4'}
          ref={scrollContainerRef}>
-      <ControlScroll onChange={setScrollOptions} />
+      <ControlScroll onChange={setScrollOptions} scrollingValue={scrollOptions.isScrolling} />
       <ModalQuiz abbrev={bookAbbrev} chapter={chapterNumber} checkQuiz={checkQuiz}/>
       {children}
     </div>

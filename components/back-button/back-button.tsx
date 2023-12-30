@@ -1,21 +1,34 @@
 'use client'
 
 import {LucideArrowBigLeftDash} from "lucide-react";
-import {useRouter} from "next/navigation";
+import {useParams, usePathname, useRouter} from "next/navigation";
 import Button from "@/components/button/button";
 
 type Props = {
-    size?: 'small' | 'medium'
+    size?: 'small' | 'medium',
+    backHistory?: ''
 }
 
 const BackButton = ({ size = 'small' }: Props) => {
     const router = useRouter()
+    const params = useParams()
+    const path = usePathname();
 
     const back = () => {
-        if (window.history?.length) {
-            router.back();
-        } else {
+        const { book, chapter } = params
+        if (book && chapter) {
+            if (path.includes('quiz')) {
+                router.push(`/${book}/${chapter}`)
+                return
+            }
+
+            router.push(`/${book}`)
+            return
+        }
+
+        if (book && !chapter) {
             router.push('/')
+            return
         }
     }
 

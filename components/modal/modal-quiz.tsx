@@ -57,7 +57,7 @@ const ModalQuiz = ({ abbrev, chapter, checkQuiz }: Props) => {
   return (
     <>
       {!showModal && quizAvailable && (
-        <div className="fixed top-4 right-5 z-30">
+        <div className="fixed top-20 right-5 z-30">
           <div className="flex justify-center">
             <Button
               className="w-[64px] h-[48px]"

@@ -10,10 +10,11 @@ export type ControlScrollOptions = {
 
 type Props = {
   onChange?: (options: ControlScrollOptions) => void;
+  scrollingValue?: boolean
 }
 
-const ControlScroll = ({onChange}: Props) => {
-  const [isScrolling, setIsScrolling] = useState(true);
+const ControlScroll = ({onChange, scrollingValue}: Props) => {
+  const [isScrolling, setIsScrolling] = useState(scrollingValue);
   const [speed, setSpeed] = useState(1);
   const [showButtons, setShowButtons] = useState(true);
 
@@ -25,6 +26,10 @@ const ControlScroll = ({onChange}: Props) => {
       })
     }
   }, [isScrolling, speed, onChange]);
+
+  useEffect(() => {
+    setIsScrolling(scrollingValue)
+  }, [scrollingValue]);
 
   const onPause = () => {
     setIsScrolling(!isScrolling);
@@ -45,7 +50,7 @@ const ControlScroll = ({onChange}: Props) => {
   return (
     <div id="scroll-control"
          className={`fixed z-40 bg-netflix-black py-1 rounded-3xl duration-500 ${showButtons ? 'px-3' : 'px-1'}`}
-         style={{bottom: 80, right: 8}}>
+         style={{top: 10, right: 8}}>
       <div className="flex flex-row-reverse gap-3">
         <div className="bg-red-500 rounded-3xl p-1 cursor-pointer duration-500"
              onClick={() => setShowButtons(!showButtons)}>
