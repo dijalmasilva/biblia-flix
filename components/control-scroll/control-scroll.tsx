@@ -4,7 +4,7 @@ import {LucideFastForward, LucideMoreHorizontal, LucidePause, LucidePlay, Lucide
 import {useEffect, useState} from "react";
 
 export type ControlScrollOptions = {
-  speed?: number;
+  speed: number;
   isScrolling?: boolean;
 }
 

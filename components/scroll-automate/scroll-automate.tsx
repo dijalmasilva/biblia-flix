@@ -11,7 +11,7 @@ type Props = {
   className?: string;
 };
 
-const speeds = {
+const speeds: Record<number, number> = {
   1: 1,
   2: 1.5,
   3: 2,
