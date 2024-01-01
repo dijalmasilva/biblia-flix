@@ -27,7 +27,6 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
   })
 
   const onFinishScroll = () => {
-    console.log('finish scroll')
     if (countTryQuiz < 1) {
       setTimeout(() => {
         setCheckQuiz(true);
@@ -51,7 +50,6 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
       localStorage.setItem(`read`, JSON.stringify([pattern]))
     }
 
-    console.log('change last-read')
     localStorage.setItem(`last-read`, `${bookAbbrev}-${chapterNumber}`);
     setScrollOptions({...scrollOptions, isScrolling: false })
   }

@@ -6,15 +6,20 @@ import Button from "@/components/button/button";
 
 type Props = {
     size?: 'small' | 'medium',
-    backHistory?: ''
+    backHistory?: boolean
 }
 
-const BackButton = ({ size = 'small' }: Props) => {
+const BackButton = ({ size = 'small', backHistory = false }: Props) => {
     const router = useRouter()
     const params = useParams()
     const path = usePathname();
 
     const back = () => {
+        if (backHistory) {
+            router.back()
+            return
+        }
+
         const { book, chapter } = params
         if (book && chapter) {
             if (path.includes('quiz')) {

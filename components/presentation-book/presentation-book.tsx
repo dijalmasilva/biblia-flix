@@ -33,7 +33,7 @@ const PresentationBook = ({
 
   return (
     <div className="w-full h-[420px] relative backdrop-blur">
-      {hasBack && <BackButton/>}
+      {hasBack && <BackButton backHistory />}
       <Suspense fallback={<ImageFallback width="100%" height="420px" />}>
         <Image src={image} priority fill style={{objectFit: 'cover'}} alt={slug}
                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"/>

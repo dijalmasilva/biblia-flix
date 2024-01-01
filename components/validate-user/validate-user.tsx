@@ -2,10 +2,17 @@
 
 import Modal from "@/components/modal/modal";
 import {ChangeEvent, useEffect, useState} from "react";
+import Button from "@/components/button/button";
 
 export const USER_TAG = 'christianName'
 
-const ValidateUser = () => {
+type Props = {
+  forceOpen?: boolean
+  onCancel?: () => void
+  onConfirm?: () => void
+}
+
+const ValidateUser = ({forceOpen, onCancel, onConfirm}: Props) => {
   const [christianName, setChristianName] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [error, setError] = useState('')
@@ -15,8 +22,11 @@ const ValidateUser = () => {
     const christianNameStorage = localStorage.getItem(USER_TAG)
     if (!christianNameStorage) {
       setIsModalOpen(true)
+    } else {
+      setChristianName(christianNameStorage)
+      if (forceOpen) setIsModalOpen(true)
     }
-  }, []);
+  }, [forceOpen]);
 
   const handleConfirm = (e: any | undefined) => {
     if (e) e.preventDefault()
@@ -35,6 +45,8 @@ const ValidateUser = () => {
     setIsConfirmed(true)
     setTimeout(() => {
       setIsModalOpen(false)
+      setIsConfirmed(false)
+      if (onConfirm) onConfirm()
     }, 3000)
   }
 
@@ -42,6 +54,11 @@ const ValidateUser = () => {
     if (error) setError('')
 
     setChristianName(e.target.value)
+  }
+
+  const cancel = () => {
+    setIsModalOpen(false)
+    if (onCancel) onCancel()
   }
 
   return (
@@ -52,12 +69,20 @@ const ValidateUser = () => {
           <div className="flex flex-col gap-1">
             <input type="text" placeholder="Ex: Maer-Salal-Hás-Baz" autoFocus
                    className="bg-zinc-900 outline-none rounded-lg px-4 py-2 text-white"
+                   value={christianName}
                    onChange={onChange}/>
             {error && <p className="text-red-500 text-sm text-center">{error}</p>}
           </div>
-          <button className="bg-red-500 rounded-lg px-4 py-2 text-white" type="submit">
+          <Button type="submit" size="medium" className="!bg-red-500 text-white">
             Confirmar
-          </button>
+          </Button>
+          {
+            onCancel && (
+              <Button size="medium" onClick={cancel}>
+                Cancelar
+              </Button>
+            )
+          }
         </form>
       )
       }
