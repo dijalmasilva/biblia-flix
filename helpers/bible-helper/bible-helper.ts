@@ -9,20 +9,24 @@ import {BookType} from "@/models/book";
 export type BibleVersion = 'aa' | 'acf' | 'nvi'
 type BookAbbrevReturn = BookType | undefined
 
-export const getBookByAbbrev = (abbrev: string, version: BibleVersion = 'nvi'): BookAbbrevReturn => {
-  let bible: BookType[] = nvi
-  if (version !== 'nvi') {
-    bible = version === 'aa' ? aa : acf
+export const getBible = (version: BibleVersion = 'nvi'): BookType[] => {
+  switch (version) {
+    case 'aa':
+      return aa
+    case 'acf':
+      return acf
+    default:
+      return nvi
   }
+}
 
+export const getBookByAbbrev = (abbrev: string, version: BibleVersion = 'nvi'): BookAbbrevReturn => {
+  const bible = getBible(version)
   return bible.find(book => book.abbrev === abbrev)
 }
 
 export const getBooksByName = (bookName: string, limit = 5, version: BibleVersion = 'nvi'): BookType[] => {
-  let bible: BookType[] = nvi;
-  if (version !== 'nvi') {
-    bible = version === 'aa' ? aa : acf
-  }
+  const bible = getBible(version)
 
   let bibleFiltered = bible.filter(book => book.name.toLowerCase().includes(bookName.toLowerCase())) || []
   if (limit > 0 && bibleFiltered.length > limit) {

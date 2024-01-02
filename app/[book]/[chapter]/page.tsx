@@ -1,8 +1,23 @@
-import {getBookByAbbrev} from "@/helpers/bible-helper/bible-helper";
+import {getBible, getBookByAbbrev} from "@/helpers/bible-helper/bible-helper";
 import BackButton from "@/components/back-button/back-button";
 import LazyImage from "@/components/lazy-image/lazy-image";
 import ScrollAutomate from "@/components/scroll-automate/scroll-automate";
 import NextChapterButton from "@/components/next-chapter-button/next-chapter-button";
+
+export async function generateStaticParams() {
+  const bible = getBible();
+  const params: { book: string, chapter: string }[] = []
+
+  bible.forEach(book => {
+    if (book.chapters) {
+      book.chapters.forEach((chapter, index) => {
+        params.push({book: book.abbrev, chapter: `${index + 1}`})
+      })
+    }
+  })
+
+  return params;
+}
 
 const ChapterPage = ({params}: {
   params: { book: string, chapter: number }

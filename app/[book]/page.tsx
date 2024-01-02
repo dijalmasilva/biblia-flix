@@ -1,6 +1,11 @@
-import {getBookByAbbrev} from "@/helpers/bible-helper/bible-helper";
+import {getBible, getBookByAbbrev} from "@/helpers/bible-helper/bible-helper";
 import PresentationBook from "@/components/presentation-book/presentation-book";
 import ResumeChapter from "@/components/resume-chapter/resume-chapter";
+
+export async function generateStaticParams() {
+  const bible = getBible();
+  return bible.map(book => ({book: book.abbrev}))
+}
 
 const BookPage = ({params}: { params: { book: string } }) => {
 

@@ -2,6 +2,25 @@ import BackButton from "@/components/back-button/back-button";
 import LazyImage from "@/components/lazy-image/lazy-image";
 import {getQuiz} from "@/quizzes/quizzes";
 import SlideQuiz from "@/components/slide-quiz/slide-quiz";
+import {getBible} from "@/helpers/bible-helper/bible-helper";
+
+export async function generateStaticParams() {
+  const bible = getBible();
+  const params: { book: string, chapter: string }[] = []
+
+  bible.forEach(book => {
+    if (book.chapters) {
+      book.chapters.forEach((chapter, index) => {
+        const quiz = getQuiz(book.abbrev, index + 1);
+        if (quiz && quiz.title) params.push({book: book.abbrev, chapter: `${index + 1}`})
+      })
+    }
+  })
+
+  console.log(params)
+
+  return params;
+}
 
 const QuizPage = ({params}: {
   params: { book: string, chapter: number }
