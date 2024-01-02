@@ -5,7 +5,9 @@ const config: CapacitorConfig = {
   appName: 'biblia-flix',
   webDir: 'out',
   server: {
-    androidScheme: 'https'
+    androidScheme: 'https',
+    // cleartext: true,
+    // url: 'http://192.168.0.6:3000'
   }
 };
 

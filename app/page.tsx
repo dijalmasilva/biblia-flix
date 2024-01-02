@@ -6,7 +6,7 @@ import LastRead from "@/components/last-read/last-read";
 export default function Home() {
 
     return (
-        <main className="main">
+        <main className="mb-8">
             <div className="relative">
                 <Header />
                 <LastRead />

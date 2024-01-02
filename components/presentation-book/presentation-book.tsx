@@ -7,6 +7,7 @@ import BackButton from "@/components/back-button/back-button";
 import {Suspense} from "react";
 import ImageFallback from "@/components/image-fallback/image-fallback";
 import Button from "@/components/button/button";
+import SafeArea from "@/components/safe-area/safe-area";
 
 type PresentationBookProps = {
   image: string;
@@ -33,7 +34,7 @@ const PresentationBook = ({
 
   return (
     <div className="w-full h-[420px] relative backdrop-blur">
-      {hasBack && <BackButton />}
+      {hasBack && <SafeArea><BackButton /></SafeArea>}
       <Suspense fallback={<ImageFallback width="100%" height="420px" />}>
         <Image src={image} priority fill style={{objectFit: 'cover'}} alt={slug}
                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"/>

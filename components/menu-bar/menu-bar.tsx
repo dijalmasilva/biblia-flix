@@ -6,6 +6,7 @@ import menuActor from "@/machines/menu-machine/menu-machine";
 import {usePathname, useRouter} from "next/navigation";
 import Button from "@/components/button/button";
 import ValidateUser from "@/components/validate-user/validate-user";
+import SafeArea from "@/components/safe-area/safe-area";
 
 enum MenuOptions {
   HOME = 'home',
@@ -78,7 +79,7 @@ const MenuBar = () => {
 
   return (
     <>
-      <div className="fixed bottom-0 flex gap-4 justify-around bg-netflix-black text-netflix-white w-full p-3 z-20">
+      <div className="flex gap-4 justify-around bg-netflix-black text-netflix-white w-full p-3 z-20">
         <MenuItem
           onClick={() => dispatchEventMachine(MenuOptions.HOME)}
           icon={LucideHome}
@@ -101,22 +102,25 @@ const MenuBar = () => {
       {
         option === MenuOptions.MENU && (
           <div className="fixed left-0 top-0 w-full h-screen z-40 bg-netflix-black">
-            <div className="flex flex-col p-4 justify-between h-screen">
-              {/*Menu options*/}
-              <div className="flex text-center w-full justify-center flex-1 items-center">
-                <ul className="flex flex-col gap-4">
-                  <li className="cursor-pointer" onClick={onClickChangeName}>
-                    <h1 className="text-xl hover:text-red-500">Mudar seu nome</h1>
-                  </li>
-                  {/*TODO*/}
-                  {/*<li className="cursor-pointer">*/}
-                  {/*  <h1 className="text-xl hover:text-red-500">Versão da Bíblia (NVI)</h1>*/}
-                  {/*</li>*/}
-                </ul>
+            <SafeArea topDisable>
+              <div className="flex flex-col p-4 justify-between h-screen pb-8">
+                {/*Menu options*/}
+                <div className="flex text-center w-full justify-center flex-1 items-center">
+                  <ul className="flex flex-col gap-4">
+                    <li className="cursor-pointer" onClick={onClickChangeName}>
+                      <h1 className="text-xl hover:text-red-500">Mudar seu nome</h1>
+                    </li>
+                    {/*TODO*/}
+                    {/*<li className="cursor-pointer">*/}
+                    {/*  <h1 className="text-xl hover:text-red-500">Versão da Bíblia (NVI)</h1>*/}
+                    {/*</li>*/}
+                  </ul>
+                </div>
+                <Button onClick={closeMenu}>Fechar</Button>
               </div>
-              <Button onClick={closeMenu}>Fechar</Button>
-            </div>
-            <ValidateUser forceOpen={showChristianNameModal} onCancel={finishChangeName} onConfirm={finishChangeName}/>
+            </SafeArea>
+            <ValidateUser forceOpen={showChristianNameModal} onCancel={finishChangeName}
+                          onConfirm={finishChangeName}/>
           </div>
         )
       }

@@ -24,7 +24,7 @@ const NextChapterButton = ({ abbrev, chapter}: Props) => {
 
   return (
     <Button size="medium" onClick={goToNextChapter}>
-      Próximo capítulo
+      Prox. capítulo
       <LucideArrowBigRightDash size={28} />
     </Button>
   )

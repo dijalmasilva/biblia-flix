@@ -2,6 +2,7 @@
 
 import {LucideFastForward, LucideMoreHorizontal, LucidePause, LucidePlay, LucideX} from "lucide-react";
 import {useEffect, useState} from "react";
+import SafeArea from "@/components/safe-area/safe-area";
 
 export type ControlScrollOptions = {
   speed: number;
@@ -49,7 +50,7 @@ const ControlScroll = ({onChange, scrollingValue}: Props) => {
 
   return (
     <div id="scroll-control"
-         className={`fixed z-40 bg-netflix-black py-1 rounded-3xl duration-500 ${showButtons ? 'px-3' : 'px-1'}`}
+         className={`fixed z-40 bg-netflix-black mt-[var(--inset-top)] py-1 rounded-3xl duration-500 ${showButtons ? 'px-3' : 'px-1'}`}
          style={{top: 10, right: 8}}>
       <div className="flex flex-row-reverse gap-3">
         <div className="bg-red-500 rounded-3xl p-1 cursor-pointer duration-500"

@@ -3,6 +3,7 @@ import BackButton from "@/components/back-button/back-button";
 import LazyImage from "@/components/lazy-image/lazy-image";
 import ScrollAutomate from "@/components/scroll-automate/scroll-automate";
 import NextChapterButton from "@/components/next-chapter-button/next-chapter-button";
+import SafeArea from "@/components/safe-area/safe-area";
 
 export async function generateStaticParams() {
   const bible = getBible();
@@ -46,13 +47,12 @@ const ChapterPage = ({params}: {
   }
 
   return (
-
-    <div id="chapter" className="h-screen-without-menu-bar relative">
+    <div id="chapter" className="relative" style={{ maxHeight: '-webkit-fill-available' }}>
       <LazyImage book={params.book} chapter={params.chapter} objectFit="cover"
                  className="z-[-1]" fallback="/assets/books/bg-cross.png" />
       <div className="absolute inset-0 bg-black bg-opacity-[0.6] z-[-1]"/>
-      <div className="h-screen-without-menu-bar">
-        <ScrollAutomate bookAbbrev={params.book} chapterNumber={params.chapter}>
+      <ScrollAutomate bookAbbrev={params.book} chapterNumber={params.chapter}>
+        <SafeArea>
           <div className="flex w-full justify-items-start">
             <BackButton/>
           </div>
@@ -72,11 +72,11 @@ const ChapterPage = ({params}: {
             }
           </div>
           <div className="w-full flex justify-center items-center">
-            <BackButton size="medium" />
-            <NextChapterButton abbrev={params.book} chapter={params.chapter} />
+            <BackButton size="medium"/>
+            <NextChapterButton abbrev={params.book} chapter={params.chapter}/>
           </div>
-        </ScrollAutomate>
-      </div>
+        </SafeArea>
+      </ScrollAutomate>
     </div>
   )
 }

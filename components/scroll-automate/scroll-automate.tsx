@@ -51,7 +51,7 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
     }
 
     localStorage.setItem(`last-read`, `${bookAbbrev}-${chapterNumber}`);
-    setScrollOptions({...scrollOptions, isScrolling: false })
+    setScrollOptions({...scrollOptions, isScrolling: false})
   }, [countTryQuiz, bookAbbrev, chapterNumber, scrollOptions]);
 
   useEffect(() => {
@@ -95,9 +95,10 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
   }, []);
 
   return (
-    <div className={className ?? 'flex flex-col overflow-y-auto h-screen-without-menu-bar w-full px-4'}
+    <div id="scroll-automate"
+         className={className ?? 'h-screen-without-menu-bar overflow-y-auto flex flex-col w-full px-4'}
          ref={scrollContainerRef}>
-      <ControlScroll onChange={setScrollOptions} scrollingValue={scrollOptions.isScrolling} />
+      <ControlScroll onChange={setScrollOptions} scrollingValue={scrollOptions.isScrolling}/>
       <ModalQuiz abbrev={bookAbbrev} chapter={chapterNumber} checkQuiz={checkQuiz}/>
       {children}
     </div>
