@@ -38,14 +38,14 @@ const SearchBook = ({slug, title}: SearchBookProps) => {
 
   return (
     <div className="flex bg-[#424242] w-full cursor-pointer" onClick={onClick}>
-      <div className="w-[220px] h-[80px] relative">
-        <Suspense fallback={<ImageFallback width="220px" height="80px" />}>
+      <div className="w-[150px] h-[100px] relative">
+        <Suspense fallback={<ImageFallback width="180px" height="100px" />}>
           <Image src={`/assets/covers/${slug}.png`} alt={slug} fill style={{objectFit: 'cover'}}
                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"/>
         </Suspense>
-        <RedBar imageWidth={220} bookAbbreviation={slug} isBook/>
+        <RedBar imageWidth={150} bookAbbreviation={slug} isBook/>
       </div>
-      <div className="flex items-center justify-between w-full px-4">
+      <div className="flex items-center justify-between flex-1 px-4">
         <h1 className="font-light">{title}</h1>
         <LucidePlay/>
       </div>

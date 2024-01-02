@@ -17,7 +17,7 @@ const NextChapterButton = ({ abbrev, chapter}: Props) => {
     return <></>
   }
 
-  const goToNextChapter = () => {
+  const goToNextChapter = async () => {
     const chapterNumber = parseInt(String(chapter))
     router.push(`/${abbrev}/${(chapterNumber + 1)}`)
   }

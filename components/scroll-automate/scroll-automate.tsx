@@ -1,6 +1,6 @@
 'use client'
 
-import {useEffect, useRef, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import ModalQuiz from "@/components/modal/modal-quiz";
 import ControlScroll, {ControlScrollOptions} from "@/components/control-scroll/control-scroll";
 
@@ -26,7 +26,7 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
     speed: 1
   })
 
-  const onFinishScroll = () => {
+  const onFinishScroll = useCallback(() => {
     if (countTryQuiz < 1) {
       setTimeout(() => {
         setCheckQuiz(true);
@@ -52,17 +52,10 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
 
     localStorage.setItem(`last-read`, `${bookAbbrev}-${chapterNumber}`);
     setScrollOptions({...scrollOptions, isScrolling: false })
-  }
+  }, [countTryQuiz, bookAbbrev, chapterNumber, scrollOptions]);
 
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
-
-    if (scrollContainer) {
-      const atBottom = scrollContainer.scrollTop + scrollContainer.clientHeight >= scrollContainer.scrollHeight - 5;
-      if (atBottom) {
-        onFinishScroll();
-      }
-    }
 
     const handleScroll = () => {
       const scrollContainer = scrollContainerRef.current;
@@ -93,7 +86,7 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
         scrollContainer.removeEventListener("scroll", handleScroll);
       }
     };
-  }, [bookAbbrev, chapterNumber, scrollOptions]); // Dependências do efeito
+  }, [bookAbbrev, chapterNumber, onFinishScroll, scrollOptions]); // Dependências do efeito
 
   useEffect(() => {
     setTimeout(() => {
