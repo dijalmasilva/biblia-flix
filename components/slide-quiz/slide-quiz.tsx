@@ -6,9 +6,10 @@ import {useEffect, useState} from "react";
 import {dataURLtoFile} from "@/helpers/share-helper/share-helper";
 import {toJpeg} from "html-to-image";
 import {USER_TAG} from "@/components/validate-user/validate-user";
+import {Share} from "@capacitor/share";
 
 const SlideQuiz = ({quiz}: { quiz: QuizType }) => {
-  let christianName;
+  let christianName: string;
   try {
     christianName = localStorage.getItem(USER_TAG) || 'Irmão'
   } catch (e) {
@@ -74,9 +75,18 @@ const SlideQuiz = ({quiz}: { quiz: QuizType }) => {
       const element = document.getElementById('result')
       if (element) {
         toJpeg(element, {quality: 0.95}).then(
-          (dataUrl) => {
-            const file = dataURLtoFile(dataUrl, `${quiz.title.replace(' ', '_').toLowerCase()}.png`);
-            downloadFile(file)
+          async (dataUrl) => {
+            if (await Share.canShare()) {
+              await Share.share({
+                title: `Resultado do Quiz - ${quiz.title}`,
+                text: `${christianName}, você acertou ${countCorrectAnswers()} de ${quiz.questions.length} questões!`,
+                url: dataUrl,
+                dialogTitle: `Resultado do Quiz - ${quiz.title}`,
+              })
+            } else {
+              const file = dataURLtoFile(dataUrl, `${quiz.title.replace(' ', '_').toLowerCase()}.png`);
+              downloadFile(file)
+            }
           }
         );
       }

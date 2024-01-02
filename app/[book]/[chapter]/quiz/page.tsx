@@ -17,8 +17,6 @@ export async function generateStaticParams() {
     }
   })
 
-  console.log(params)
-
   return params;
 }
 
