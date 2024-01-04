@@ -3,6 +3,7 @@ import LazyImage from "@/components/lazy-image/lazy-image";
 import {getQuiz} from "@/quizzes/quizzes";
 import SlideQuiz from "@/components/slide-quiz/slide-quiz";
 import {getBible} from "@/helpers/bible-helper/bible-helper";
+import SafeArea from "@/components/safe-area/safe-area";
 
 
 export async function generateStaticParams() {
@@ -44,18 +45,20 @@ const QuizPage = async ({params}: {
         <div className="absolute inset-0 bg-black bg-opacity-[0.5] z-[-1]"/>
         <div className="h-screen-without-menu-bar">
           <div className="flex flex-col overflow-y-auto h-screen-without-menu-bar w-full px-4">
-            <div className="flex w-full justify-items-start">
-              <BackButton/>
-            </div>
-            <div className="text-center py-4">
-              <h1 className="font-bold text-2xl">{quiz.title}</h1>
-            </div>
-            <div className="flex flex-col gap-2">
-              <SlideQuiz quiz={quiz} />
-            </div>
-            <div className="w-full flex justify-center items-center">
-              <BackButton/>
-            </div>
+            <SafeArea>
+              <div className="flex w-full justify-items-start">
+                <BackButton/>
+              </div>
+              <div className="text-center py-4">
+                <h1 className="font-bold text-2xl">{quiz.title}</h1>
+              </div>
+              <div className="flex flex-col gap-2">
+                <SlideQuiz quiz={quiz}/>
+              </div>
+              <div className="w-full flex justify-center items-center">
+                <BackButton/>
+              </div>
+            </SafeArea>
           </div>
         </div>
       </div>
