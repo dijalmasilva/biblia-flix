@@ -5,7 +5,6 @@ import SlideQuiz from "@/components/slide-quiz/slide-quiz";
 import {getBible} from "@/helpers/bible-helper/bible-helper";
 import SafeArea from "@/components/safe-area/safe-area";
 
-
 export async function generateStaticParams() {
   const bible = getBible();
 
@@ -20,11 +19,8 @@ export async function generateStaticParams() {
   })
 
   const paramsNested = await Promise.all(paramsPromises);
-  const params = paramsNested.flat();
-
-  return params;
+  return paramsNested.flat();
 }
-
 const QuizPage = async ({params}: {
   params: { book: string, chapter: number }
 }) => {
@@ -71,5 +67,4 @@ const QuizPage = async ({params}: {
     )
   })
 }
-
 export default QuizPage;

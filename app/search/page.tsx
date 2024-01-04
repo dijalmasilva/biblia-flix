@@ -1,8 +1,7 @@
 'use client'
 
-import {LucideSearch} from "lucide-react";
 import SearchBook from "@/components/search-book/search-book";
-import {ChangeEvent, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {getBooksByName} from "@/helpers/bible-helper/bible-helper";
 import {BookType} from "@/models/book";
 import SearchInput from "@/components/search-input/search-input";

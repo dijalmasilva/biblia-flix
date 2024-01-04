@@ -6,6 +6,7 @@ import Link from "next/link";
 import RedBar from "@/components/red-bar/red-bar";
 import {Suspense, useEffect, useState} from "react";
 import ImageFallback from "@/components/image-fallback/image-fallback";
+import useBookImage from "@/hooks/useBookImage";
 
 type CardBookProps = {
   title: string
@@ -13,22 +14,7 @@ type CardBookProps = {
 }
 
 const CardBook = ({title, slug}: CardBookProps) => {
-  const [image, setImage] = useState<string>('/assets/books/bg-cross.png')
-
-  useEffect(() => {
-    const url = `https://raw.githubusercontent.com/dijalmasilva/biblia-flix-assets/main/assets/covers/${slug}.png`
-    fetch(url, {cache: 'force-cache'}).then(async response => {
-      if (response.status === 404) {
-        setImage('/assets/books/bg-cross.png')
-      } else if (response.status === 200) {
-        const imageBlob = await response.blob()
-        const imageObjectUrl = URL.createObjectURL(imageBlob)
-        setImage(imageObjectUrl)
-      }
-    }).catch(() => {
-      setImage('/assets/books/bg-cross.png')
-    })
-  }, []);
+  const image = useBookImage(slug, 'force-cache')
 
   return (
     <Link className="flex flex-col-reverse items-center min-w-[200px]" href={`/${slug}`}>

@@ -8,6 +8,7 @@ import {Suspense, useEffect, useState} from "react";
 import ImageFallback from "@/components/image-fallback/image-fallback";
 import Button from "@/components/button/button";
 import SafeArea from "@/components/safe-area/safe-area";
+import useBookImage from "@/hooks/useBookImage";
 
 type PresentationBookProps = {
   slug: string;
@@ -15,6 +16,7 @@ type PresentationBookProps = {
   showInfo?: boolean;
   hasBack?: boolean;
   hideRead?: boolean;
+  cache?: RequestCache;
 }
 
 const PresentationBook = ({
@@ -22,25 +24,11 @@ const PresentationBook = ({
   title,
   showInfo,
   hasBack = true,
-  hideRead = false
+  hideRead = false,
+  cache = 'force-cache'
 }: PresentationBookProps) => {
   const router = useRouter()
-  const [image, setImage] = useState<string>('/assets/books/bg-cross.png')
-
-  useEffect(() => {
-    const url = `https://raw.githubusercontent.com/dijalmasilva/biblia-flix-assets/main/assets/covers/${slug}.png`
-    fetch(url, {cache: 'force-cache'}).then(async response => {
-      if (response.status === 404) {
-        setImage('/assets/books/bg-cross.png')
-      } else if (response.status === 200) {
-        const imageBlob = await response.blob()
-        const imageObjectUrl = URL.createObjectURL(imageBlob)
-        setImage(imageObjectUrl)
-      }
-    }).catch(() => {
-      setImage('/assets/books/bg-cross.png')
-    })
-  }, []);
+  const image = useBookImage(slug, cache)
 
   const onRead = () => {
     router.push(`/${slug}`)

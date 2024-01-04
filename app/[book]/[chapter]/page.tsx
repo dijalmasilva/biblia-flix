@@ -4,7 +4,6 @@ import LazyImage from "@/components/lazy-image/lazy-image";
 import ScrollAutomate from "@/components/scroll-automate/scroll-automate";
 import NextChapterButton from "@/components/next-chapter-button/next-chapter-button";
 import SafeArea from "@/components/safe-area/safe-area";
-
 export async function generateStaticParams() {
   const bible = getBible();
   const params: { book: string, chapter: string }[] = []
@@ -19,7 +18,6 @@ export async function generateStaticParams() {
 
   return params;
 }
-
 const ChapterPage = ({params}: {
   params: { book: string, chapter: number }
 }) => {

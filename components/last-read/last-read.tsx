@@ -6,7 +6,7 @@ import {getBookByAbbrev} from "@/helpers/bible-helper/bible-helper";
 
 const LastRead = () => {
 
-  const [abbrevBook, setAbbrevBook] = useState<string>('gn')
+  const [abbrevBook, setAbbrevBook] = useState<string>('')
   const [chapter, setChapter] = useState<number>(1)
 
   const book = getBookByAbbrev(abbrevBook)
@@ -18,13 +18,15 @@ const LastRead = () => {
         const [book, chapter] = lastReadStorage.split('-')
         setAbbrevBook(book)
         setChapter(parseInt(chapter))
+      } else {
+        setAbbrevBook('gn')
+        setChapter(1)
       }
     }
   }, []);
 
   return (
-    <PresentationBook hasBack={false} slug={abbrevBook}
-                      title={`${book?.name} - Capítulo  ${chapter}`}/>
+    <PresentationBook hasBack={false} slug={abbrevBook} title={`${book?.name} - Capítulo  ${chapter}`}/>
   )
 }
 
