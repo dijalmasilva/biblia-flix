@@ -21,7 +21,6 @@ export async function generateStaticParams() {
   const paramsNested = await Promise.all(paramsPromises);
   const params = paramsNested.flat();
 
-  console.dir(params)
   return params;
 }
 
