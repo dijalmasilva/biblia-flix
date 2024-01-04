@@ -26,6 +26,21 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
     speed: 1
   })
 
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    const atBottom = scrollContainer.scrollTop + scrollContainer.clientHeight >= scrollContainer.scrollHeight - 5;
+
+    if (atBottom) {
+      onFinishScroll();
+    } else {
+      setTimeout(() => {
+        setScrollOptions({...scrollOptions, isScrolling: true})
+      }, 1000)
+    }
+  }, []);
+
   const onFinishScroll = useCallback(() => {
     if (countTryQuiz < 1) {
       setTimeout(() => {
@@ -68,6 +83,11 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
       }
     };
 
+    if (scrollOptions.isScrolling) {
+      handleScroll()
+    }
+
+
     if (scrollContainer) {
       // scrollContainer.style.scrollBehavior = "smooth"; disabled because it not permit to scroll manually
       scrollContainer.addEventListener("scroll", handleScroll);
@@ -87,12 +107,6 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
       }
     };
   }, [bookAbbrev, chapterNumber, onFinishScroll, scrollOptions]); // Dependências do efeito
-
-  useEffect(() => {
-    setTimeout(() => {
-      setScrollOptions({...scrollOptions, isScrolling: true})
-    }, 1000)
-  }, []);
 
   return (
     <div id="scroll-automate"

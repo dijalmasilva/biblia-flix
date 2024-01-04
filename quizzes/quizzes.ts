@@ -1,4 +1,5 @@
 import gn3 from './gn/3'
+import {toRandomOptions} from "@/helpers/array-helper/array-helper";
 
 export type QuestionType = {
     id: number,
@@ -22,18 +23,29 @@ const quizzes: Record<string, Record<number, QuizType>> = {
     }
 }
 
-export const getQuiz = (bookAbbrev: string, reference: number): QuizType => {
-    try {
-        return quizzes[bookAbbrev][reference]
-    } catch (e) {
-        return { title: '', questions: [], requiredRead: []}
-    }
+const randomOptionsFromQuiz = (quiz: QuizType): QuizType => {
+  quiz.questions.forEach(question => {
+    question.options = toRandomOptions(question.options)
+  })
+  return quiz
 }
 
-export const hasQuiz = (bookAbbrev: string, reference: number): boolean => {
+const emptyQuiz: QuizType = { title: '', questions: [], requiredRead: []}
+
+export const getQuiz = async (bookAbbrev: string, reference: number): Promise<QuizType> => {
+    if (bookAbbrev !== 'gn') return Promise.resolve(emptyQuiz)
+
     try {
-        return !!quizzes[bookAbbrev][reference]
+        const url = `http://localhost:3000/quizzes/${bookAbbrev}/${reference}.json`
+        return fetch(url)
+          .then(res => res.json())
+          .then((data: QuizType) => {
+            return randomOptionsFromQuiz(data)
+          })
+          .catch((e) => {
+              return emptyQuiz
+          })
     } catch (e) {
-        return false
+        return emptyQuiz
     }
 }

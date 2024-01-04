@@ -17,14 +17,21 @@ const LazyImage = ({fallback, chapter, book, className, objectFit = 'cover'}: La
   const [image, setImage] = useState<string | any>('')
 
   useEffect(() => {
-    import((`../../public/assets/books/${book}/${book}-${chapter}.png`)).then(image => {
-      setImage(image.default.src)
+    const url = `https://raw.githubusercontent.com/dijalmasilva/biblia-flix/main/public/assets/books/${book}/${book}-${chapter}.png`
+    fetch(url, {cache: 'force-cache'}).then(async response => {
+      if (response.status === 404) {
+        setImage(fallback)
+      } else if (response.status === 200) {
+        const imageBlob = await response.blob()
+        const imageObjectUrl = URL.createObjectURL(imageBlob)
+        setImage(imageObjectUrl)
+      }
     }).catch(() => {
       setImage(fallback)
     })
   }, [chapter, book, fallback])
 
-  if (!image) return <ImageFallback width="100%" height="100%" />
+  if (!image) return <ImageFallback width="100%" height="100%"/>
 
   return (
     <Image src={image} alt={book} fill style={{objectFit}}

@@ -2,7 +2,7 @@
 
 import Modal from "@/components/modal/modal";
 import {useEffect, useState} from "react";
-import {getQuiz, hasQuiz, QuizType} from "@/quizzes/quizzes";
+import {getQuiz, QuizType} from "@/quizzes/quizzes";
 import Link from "next/link";
 import CrossAnimationIcon from "@/components/star-spark/cross-animation-icon";
 import Button from "@/components/button/button";
@@ -13,44 +13,45 @@ type Props = {
   checkQuiz?: boolean;
 }
 
-const ModalQuiz = ({ abbrev, chapter, checkQuiz }: Props) => {
+const ModalQuiz = ({abbrev, chapter, checkQuiz}: Props) => {
   const [showModal, setShowModal] = useState(false);
   const [quizAvailable, setQuizAvailable] = useState(false);
   const [quiz, setQuiz] = useState<QuizType | null>(null);
 
   useEffect(() => {
-    if (localStorage) {
-      const key = `${abbrev}-${chapter}`;
-      const chaptersRead = localStorage.getItem('read');
-      let quizzesDone = localStorage.getItem('quizzes');
+    (async () => {
+      if (localStorage) {
+        const key = `${abbrev}-${chapter}`;
+        const chaptersRead = localStorage.getItem('read');
+        let quizzesDone = localStorage.getItem('quizzes');
 
-      if (!chaptersRead) return;
+        if (!chaptersRead) return;
 
-      if (!quizzesDone) {
-        localStorage.setItem('quizzes', JSON.stringify([]));
-        quizzesDone = '[]';
+        if (!quizzesDone) {
+          localStorage.setItem('quizzes', JSON.stringify([]));
+          quizzesDone = '[]';
+        }
+
+        const quiz = await getQuiz(abbrev, chapter);
+        if (!quiz || !quiz.title) return;
+        const quizzes = JSON.parse(quizzesDone);
+
+        if (quizzes.includes(quiz.title)) return;
+
+        const requiredRead = quiz.requiredRead;
+        const read = JSON.parse(chaptersRead) as string[];
+
+        let readChapters = 0;
+        for (const required of requiredRead) {
+          if (read.includes(required)) readChapters++;
+        }
+
+        if (readChapters === requiredRead.length) {
+          setQuizAvailable(true);
+          setQuiz(quiz)
+        }
       }
-
-      if (!hasQuiz(abbrev, chapter)) return
-
-      const quiz = getQuiz(abbrev, chapter);
-      const quizzes = JSON.parse(quizzesDone);
-
-      if (quizzes.includes(quiz.title)) return;
-
-      const requiredRead = quiz.requiredRead;
-      const read = JSON.parse(chaptersRead) as string[];
-
-      let readChapters = 0;
-      for (const required of requiredRead) {
-        if (read.includes(required)) readChapters++;
-      }
-
-      if (readChapters === requiredRead.length) {
-        setQuizAvailable(true);
-        setQuiz(quiz)
-      }
-    }
+    })()
   }, [checkQuiz]);
 
 
@@ -63,7 +64,7 @@ const ModalQuiz = ({ abbrev, chapter, checkQuiz }: Props) => {
               className="w-[64px] h-[48px]"
               onClick={() => setShowModal(true)}
             >
-              <CrossAnimationIcon />
+              <CrossAnimationIcon/>
             </Button>
           </div>
         </div>
