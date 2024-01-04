@@ -29,7 +29,7 @@ export const getQuiz = async (bookAbbrev: string, reference: number): Promise<Qu
   if (bookAbbrev !== 'gn') return Promise.resolve(emptyQuiz)
 
   try {
-    const url = `https://raw.githubusercontent.com/dijalmasilva/biblia-flix/main/public/quizzes/${bookAbbrev}/${reference}.json`
+    const url = `https://raw.githubusercontent.com/dijalmasilva/biblia-flix-assets/main/quizzes/${bookAbbrev}/${reference}.json`
     return fetch(url, { cache: 'default' })
       .then(res => res.json())
       .then((data: QuizType) => {

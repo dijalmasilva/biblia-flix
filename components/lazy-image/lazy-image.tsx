@@ -17,7 +17,7 @@ const LazyImage = ({fallback, chapter, book, className, objectFit = 'cover'}: La
   const [image, setImage] = useState<string | any>('')
 
   useEffect(() => {
-    const url = `https://raw.githubusercontent.com/dijalmasilva/biblia-flix/main/public/assets/books/${book}/${book}-${chapter}.png`
+    const url = `https://raw.githubusercontent.com/dijalmasilva/biblia-flix-assets/main/assets/books/${book}/${book}-${chapter}.png`
     fetch(url, {cache: 'default'}).then(async response => {
       if (response.status === 404) {
         setImage(fallback)

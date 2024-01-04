@@ -23,7 +23,7 @@ const LastRead = () => {
   }, []);
 
   return (
-    <PresentationBook hasBack={false} image={`/assets/covers/${abbrevBook}.png`} slug={abbrevBook}
+    <PresentationBook hasBack={false} slug={abbrevBook}
                       title={`${book?.name} - Capítulo  ${chapter}`}/>
   )
 }

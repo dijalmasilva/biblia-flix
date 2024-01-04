@@ -4,13 +4,12 @@ import Image from "next/image";
 import {LucideInfo, LucidePlay} from "lucide-react";
 import {useRouter} from "next/navigation";
 import BackButton from "@/components/back-button/back-button";
-import {Suspense} from "react";
+import {Suspense, useEffect, useState} from "react";
 import ImageFallback from "@/components/image-fallback/image-fallback";
 import Button from "@/components/button/button";
 import SafeArea from "@/components/safe-area/safe-area";
 
 type PresentationBookProps = {
-  image: string;
   slug: string;
   title: string;
   showInfo?: boolean;
@@ -19,7 +18,6 @@ type PresentationBookProps = {
 }
 
 const PresentationBook = ({
-  image,
   slug,
   title,
   showInfo,
@@ -27,6 +25,22 @@ const PresentationBook = ({
   hideRead = false
 }: PresentationBookProps) => {
   const router = useRouter()
+  const [image, setImage] = useState<string>('/assets/books/bg-cross.png')
+
+  useEffect(() => {
+    const url = `https://raw.githubusercontent.com/dijalmasilva/biblia-flix-assets/main/assets/covers/${slug}.png`
+    fetch(url, {cache: 'force-cache'}).then(async response => {
+      if (response.status === 404) {
+        setImage('/assets/books/bg-cross.png')
+      } else if (response.status === 200) {
+        const imageBlob = await response.blob()
+        const imageObjectUrl = URL.createObjectURL(imageBlob)
+        setImage(imageObjectUrl)
+      }
+    }).catch(() => {
+      setImage('/assets/books/bg-cross.png')
+    })
+  }, []);
 
   const onRead = () => {
     router.push(`/${slug}`)
