@@ -83,11 +83,6 @@ const ScrollAutomate = ({children, bookAbbrev, chapterNumber, className}: Props)
       }
     };
 
-    if (scrollOptions.isScrolling) {
-      handleScroll()
-    }
-
-
     if (scrollContainer) {
       // scrollContainer.style.scrollBehavior = "smooth"; disabled because it not permit to scroll manually
       scrollContainer.addEventListener("scroll", handleScroll);
