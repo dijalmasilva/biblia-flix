@@ -28,7 +28,7 @@ const PresentationBook = ({
   cache = 'force-cache'
 }: PresentationBookProps) => {
   const router = useRouter()
-  const image = useBookImage(slug, cache)
+  const {image} = useBookImage(slug, undefined, cache)
 
   const onRead = () => {
     router.push(`/${slug}`)

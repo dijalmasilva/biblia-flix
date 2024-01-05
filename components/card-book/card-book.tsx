@@ -14,7 +14,7 @@ type CardBookProps = {
 }
 
 const CardBook = ({title, slug}: CardBookProps) => {
-  const image = useBookImage(slug, 'force-cache')
+  const {image} = useBookImage(slug, undefined,'force-cache')
 
   return (
     <Link className="flex flex-col-reverse items-center min-w-[200px]" href={`/${slug}`}>

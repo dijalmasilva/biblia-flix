@@ -4,6 +4,9 @@ import LazyImage from "@/components/lazy-image/lazy-image";
 import ScrollAutomate from "@/components/scroll-automate/scroll-automate";
 import NextChapterButton from "@/components/next-chapter-button/next-chapter-button";
 import SafeArea from "@/components/safe-area/safe-area";
+import Button from "@/components/button/button";
+import ShareButton from "@/components/share-button/share-button";
+import ShareChapterImage from "@/components/share-chapter-image/share-chapter-image";
 export async function generateStaticParams() {
   const bible = getBible();
   const params: { book: string, chapter: string }[] = []
@@ -72,6 +75,11 @@ const ChapterPage = ({params}: {
           <div className="w-full flex justify-center items-center">
             <BackButton size="medium"/>
             <NextChapterButton abbrev={params.book} chapter={params.chapter}/>
+          </div>
+          <div className="w-full flex justify-center items-center mb-2">
+            <ShareChapterImage book={book} chapter={params.chapter}>
+              Compartilhe a imagem desse capítulo
+            </ShareChapterImage>
           </div>
         </SafeArea>
       </ScrollAutomate>

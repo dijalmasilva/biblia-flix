@@ -3,10 +3,9 @@
 import {QuizType} from "@/quizzes/quizzes";
 import actorQuizMachine from "@/machines/quiz-machine/quiz-machine";
 import {useEffect, useState} from "react";
-import {dataURLtoFile} from "@/helpers/share-helper/share-helper";
-import {toJpeg} from "html-to-image";
+import {toPng} from "html-to-image";
 import {USER_TAG} from "@/components/validate-user/validate-user";
-import {Share} from "@capacitor/share";
+import ShareButton from "@/components/share-button/share-button";
 
 const SlideQuiz = ({quiz}: { quiz: QuizType }) => {
   let christianName: string;
@@ -17,6 +16,7 @@ const SlideQuiz = ({quiz}: { quiz: QuizType }) => {
   }
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(0)
   const [state, setState] = useState<'question' | 'result'>('question')
+  const [blob, setBlob] = useState<Blob | null>(null)
 
   useEffect(() => {
     if (state === 'result') {
@@ -32,8 +32,26 @@ const SlideQuiz = ({quiz}: { quiz: QuizType }) => {
           localStorage.setItem('quizzes', JSON.stringify(quizzes));
         }
       }
+
+      setTimeout(async () => {
+        await createImageBlobOfResult()
+      }, 500)
     }
   }, [state]);
+
+  const createImageBlobOfResult = async () => {
+    if (document) {
+      const element = document.getElementById('result')
+      if (element) {
+        toPng(element, {quality: 0.95}).then(
+          async (dataUrl, ) => {
+            const blob = await fetch(dataUrl).then(r => r.blob())
+            setBlob(blob)
+          }
+        );
+      }
+    }
+  }
 
   actorQuizMachine.subscribe((state) => {
     const {context} = state
@@ -69,42 +87,6 @@ const SlideQuiz = ({quiz}: { quiz: QuizType }) => {
     actorQuizMachine.send({type: 'START', totalQuestions: quiz.questions.length})
   }, [quiz]);
 
-
-  const shareResult = () => {
-    if (document) {
-      const element = document.getElementById('result')
-      if (element) {
-        toJpeg(element, {quality: 0.95}).then(
-          async (dataUrl) => {
-            if (await Share.canShare()) {
-              await Share.share({
-                title: `Resultado do Quiz - ${quiz.title}`,
-                text: `${christianName}, você acertou ${countCorrectAnswers()} de ${quiz.questions.length} questões!`,
-                url: dataUrl,
-                dialogTitle: `Resultado do Quiz - ${quiz.title}`,
-              })
-            } else {
-              const file = dataURLtoFile(dataUrl, `${quiz.title.replace(' ', '_').toLowerCase()}.png`);
-              downloadFile(file)
-            }
-          }
-        );
-      }
-    }
-  };
-
-  const downloadFile = (file: any) => {
-    const url = window.URL.createObjectURL(file);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${quiz.title.replace(' ', '_').toLowerCase()}.png`; // Define o nome do arquivo para download
-
-    // Anexar o link ao body (necessário para alguns navegadores)
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
-  };
 
   return (
     <div>
@@ -154,10 +136,21 @@ const SlideQuiz = ({quiz}: { quiz: QuizType }) => {
             </div>
           </div>
           <br/>
-          <div className="flex flex-col gap-2">
-            <button className="w-full px-2 py-4 bg-red-400" onClick={() => shareResult()}>Compartilhar resultado
-            </button>
-          </div>
+          {
+            blob && (
+              <div className="flex flex-col gap-2">
+                <ShareButton
+                  blob={blob}
+                  url="https://biblia-flix.vercel.app"
+                  title={`Resultado do Quiz - ${quiz.title}`}
+                  text={`Acertei ${countCorrectAnswers()} de ${quiz.questions.length} questões! E você?`}
+                  dialogTitle={`Resultado do Quiz - ${quiz.title}`}
+                  className="p-2 rounded-xl bg-red-500 w-full">
+                    Compartilhe seu resultado com seus amigos!
+                </ShareButton>
+              </div>
+            )
+          }
         </>
       )}
     </div>
