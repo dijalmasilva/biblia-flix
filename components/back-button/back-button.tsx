@@ -1,7 +1,7 @@
 'use client'
 
 import {LucideArrowBigLeftDash} from "lucide-react";
-import {useParams, usePathname, useRouter} from "next/navigation";
+import {useParams, usePathname, useRouter, useSearchParams} from "next/navigation";
 import Button from "@/components/button/button";
 
 type Props = {
@@ -11,16 +11,19 @@ type Props = {
 const BackButton = ({ size = 'small'}: Props) => {
     const router = useRouter()
     const params = useParams()
+    const searchParams = useSearchParams()
     const path = usePathname();
 
     const back = async () => {
         const { book, chapter } = params
-        if (book && chapter) {
-            if (path.includes('quiz')) {
-                router.push(`/${book}/${chapter}`)
-                return
-            }
+        if (path.includes('quiz')) {
+            const bookSearch = searchParams.get('book')
+            const chapterSearch = searchParams.get('chapter')
+            router.push(`/${bookSearch}/${chapterSearch}`)
+            return
+        }
 
+        if (book && chapter) {
             router.push(`/${book}`)
             return
         }

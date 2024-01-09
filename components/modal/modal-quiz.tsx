@@ -72,7 +72,7 @@ const ModalQuiz = ({abbrev, chapter, checkQuiz}: Props) => {
       <Modal title="Você tem um quizz disponível" description={quiz ? quiz.title : ''} isOpen={showModal}>
         <div className="flex gap-4">
           <div className="flex gap-2 justify-between mt-6 mb-2 w-full">
-            <Link href={`/${abbrev}/${chapter}/quiz`}
+            <Link href={`/quiz?book=${abbrev}&chapter=${chapter}`}
                   className="bg-red-500 px-4 py-2 rounded text-center">
               Acessar
             </Link>
