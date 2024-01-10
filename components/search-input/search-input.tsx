@@ -17,7 +17,7 @@ const SearchInput = ({onChange, value, placeholder}: Props) => {
   }
 
   return (
-    <div className="bg-[#424242] gap-4 text-[#C4C4C4] px-6 py-4 w-full font-light flex">
+    <div className="dark:bg-[#424242] shadow gap-4 text-[#C4C4C4] px-6 py-4 w-full font-light flex">
       <LucideSearch/>
       <input className="flex-1 border-none none outline-none"
              onChange={onChangeInput}

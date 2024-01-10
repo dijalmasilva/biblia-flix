@@ -1,6 +1,6 @@
 'use client'
 
-import {LucideHome, LucideMenu, LucideSearch} from "lucide-react";
+import {LucideHome, LucideMenu, LucidePencil, LucideSearch, LucideSettings} from "lucide-react";
 import {ElementType, useEffect, useState} from "react";
 import menuActor from "@/machines/menu-machine/menu-machine";
 import {usePathname, useRouter} from "next/navigation";
@@ -24,9 +24,11 @@ type MenuItemProps = {
 
 const MenuItem = ({icon: Icon, text, onClick, isActive}: MenuItemProps) => {
   return (
-    <button className="flex flex-col justify-center items-center cursor-pointer" onClick={onClick}>
-      <Icon color={isActive ? 'white' : 'gray'}/>
-      <p className={isActive ? 'text-white' : 'text-gray-400'}>{text}</p>
+    <button
+      className={`flex flex-col justify-center items-center cursor-pointer ${isActive ? 'dark:text-netflix-white' : `text-gray-400`}`}
+      onClick={onClick}>
+      <Icon/>
+      <p>{text}</p>
     </button>
   )
 }
@@ -74,12 +76,22 @@ const MenuBar = () => {
   }
 
   const closeMenu = () => {
+    if (path.includes('settings')) {
+      router.back()
+      return
+    }
+
     setStateByPath(path)
+  }
+
+  const goToSettings = () => {
+    router.push('/settings')
   }
 
   return (
     <>
-      <div className="flex gap-4 justify-around bg-netflix-black text-netflix-white w-full p-3 z-20">
+      <div
+        className="flex gap-4 justify-around dark:bg-netflix-black dark:text-netflix-white shadow-inner w-full p-3 z-20">
         <MenuItem
           onClick={() => dispatchEventMachine(MenuOptions.HOME)}
           icon={LucideHome}
@@ -101,14 +113,19 @@ const MenuBar = () => {
       </div>
       {
         option === MenuOptions.MENU && (
-          <div className="fixed left-0 top-0 w-full h-screen z-40 bg-netflix-black">
+          <div className="fixed left-0 top-0 w-full h-screen z-40 dark:bg-netflix-black bg-netflix-light-bg">
             <SafeArea topDisable>
               <div className="flex flex-col p-4 justify-between h-screen pb-8">
                 {/*Menu options*/}
                 <div className="flex text-center w-full justify-center flex-1 items-center">
                   <ul className="flex flex-col gap-4">
                     <li className="cursor-pointer" onClick={onClickChangeName}>
-                      <h1 className="text-xl hover:text-red-500">Mudar seu nome</h1>
+                      <h1 className="flex items-center gap-6 text-xl hover:text-red-500"><LucidePencil/> Editar seu nome
+                      </h1>
+                    </li>
+                    <li className="cursor-pointer" onClick={goToSettings}>
+                      <h1 className="flex items-center gap-6 text-xl hover:text-red-500"><LucideSettings/> Configurações
+                      </h1>
                     </li>
                     {/*TODO*/}
                     {/*<li className="cursor-pointer">*/}

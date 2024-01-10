@@ -6,6 +6,8 @@ import MenuBar from "@/components/menu-bar/menu-bar";
 import ValidateUser from "@/components/validate-user/validate-user";
 import {Suspense} from "react";
 import LoadingPage from "@/app/loading";
+import {applyTheme, getInitialTheme} from "@/helpers/theme-helper/theme-helper";
+import Theme from "@/components/theme/theme";
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -30,22 +32,25 @@ export const viewport: Viewport = {
 }
 
 export default function RootLayout({
- children,
-}: {
+                                     children,
+                                   }: {
   children: React.ReactNode
 }) {
+
   return (
     <html lang="pt-br">
-    <body className={`${roboto.className}`}>
-      <div className="flex flex-col h-full justify-between">
-        <div className="flex-1 overflow-y-auto">
-          <Suspense fallback={<LoadingPage/>}>
-            {children}
-          </Suspense>
-          <ValidateUser/>
-        </div>
-        <MenuBar />
+    <Theme/>
+    <body className={`${roboto.className} dark:bg-[#0a0a0a] dark:text-netflix-white bg-netflix-light-bg text-netflix-light-text`}>
+    <div
+      className="flex flex-col h-full justify-between">
+      <div className="flex-1 overflow-y-auto">
+        <Suspense fallback={<LoadingPage/>}>
+          {children}
+        </Suspense>
+        <ValidateUser/>
       </div>
+      <MenuBar/>
+    </div>
     </body>
     </html>
   )

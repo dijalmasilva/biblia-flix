@@ -75,7 +75,7 @@ const ShareButton = ({ blob, children, className, title, text, dialogTitle, url 
   }
 
   return (
-    <button className={className} onClick={onClick}>{children}</button>
+    <button className={`shadow text-netflix-white ${className}`} onClick={onClick}>{children}</button>
   )
 }
 

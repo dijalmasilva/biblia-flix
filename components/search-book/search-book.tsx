@@ -54,7 +54,7 @@ const SearchBook = ({slug, title}: SearchBookProps) => {
   }
 
   return (
-    <div className="flex bg-[#424242] w-full cursor-pointer" onClick={onClick}>
+    <div className="flex dark:bg-[#424242] bg-netflix-white shadow w-full cursor-pointer" onClick={onClick}>
       <div className="w-[150px] h-[100px] relative">
         <Suspense fallback={<ImageFallback width="180px" height="100px" />}>
           <Image src={image} alt={slug} fill style={{objectFit: 'cover'}}

@@ -17,8 +17,8 @@ const CardBook = ({title, slug}: CardBookProps) => {
   const {image} = useBookImage(slug, undefined,'force-cache')
 
   return (
-    <Link className="flex flex-col-reverse items-center min-w-[200px]" href={`/${slug}`}>
-      <h1 className="font-bold p-2 text-center bg-[#0f0f0f] w-full gap-2 rounded-b flex items-center justify-between">
+    <Link className="flex flex-col-reverse items-center min-w-[200px] shadow hover:shadow-md duration-500" href={`/${slug}`}>
+      <h1 className="font-bold p-2 text-center dark:bg-[#0f0f0f] dark:text-netflix-white w-full gap-2 rounded-b flex items-center justify-between">
         {title}
         <span>
             <LucideInfo size={22}/>

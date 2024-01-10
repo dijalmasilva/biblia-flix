@@ -19,7 +19,7 @@ const Modal = ({
   if (!isOpen) return null
 
   return (
-    <div className="fixed top-0 left-0 h-screen w-screen z-30">
+    <div className="fixed top-0 left-0 h-screen w-screen z-30 text-netflix-white">
       <div className="absolute top-0 left-0 h-full w-full bg-black opacity-80 z-30"/>
       {/*{ modal content }*/}
       <div className="absolute flex justify-center items-center h-full w-full top-0 left-0 z-40">

@@ -70,10 +70,10 @@ const ModalQuiz = ({abbrev, chapter, checkQuiz}: Props) => {
         </div>
       )}
       <Modal title="Você tem um quizz disponível" description={quiz ? quiz.title : ''} isOpen={showModal}>
-        <div className="flex gap-4">
+        <div className="flex gap-4 text-netflix-white">
           <div className="flex gap-2 justify-between mt-6 mb-2 w-full">
             <Link href={`/quiz?book=${abbrev}&chapter=${chapter}`}
-                  className="bg-red-500 px-4 py-2 rounded text-center">
+                  className="bg-red-500 px-4 py-2 rounded text-center text-netflix-white">
               Acessar
             </Link>
             <button onClick={() => setShowModal(false)}>Fechar</button>

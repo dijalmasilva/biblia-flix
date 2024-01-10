@@ -4,9 +4,9 @@ import LazyImage from "@/components/lazy-image/lazy-image";
 import ScrollAutomate from "@/components/scroll-automate/scroll-automate";
 import NextChapterButton from "@/components/next-chapter-button/next-chapter-button";
 import SafeArea from "@/components/safe-area/safe-area";
-import Button from "@/components/button/button";
-import ShareButton from "@/components/share-button/share-button";
 import ShareChapterImage from "@/components/share-chapter-image/share-chapter-image";
+import OpacityMode from "@/components/opacity-mode/opacity-mode";
+
 export async function generateStaticParams() {
   const bible = getBible();
   const params: { book: string, chapter: string }[] = []
@@ -51,7 +51,7 @@ const ChapterPage = ({params}: {
     <div id="chapter" className="relative" style={{ maxHeight: '-webkit-fill-available' }}>
       <LazyImage book={params.book} chapter={params.chapter} objectFit="cover"
                  className="z-[-1]" fallback="/assets/books/bg-cross.png" />
-      <div className="absolute inset-0 bg-black bg-opacity-[0.6] z-[-1]"/>
+      <OpacityMode />
       <ScrollAutomate bookAbbrev={params.book} chapterNumber={params.chapter}>
         <SafeArea>
           <div className="flex w-full justify-items-start">

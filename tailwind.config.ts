@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -12,6 +13,12 @@ const config: Config = {
       // colors similar to netflix
       colors: {
           netflix: {
+            light: {
+              red: '#e50914',
+              bg: '#f5f5f1',
+              gray: '#757575',
+              text: '#141414',
+            },
             red: '#e50914',
             black: '#141414',
             gray: '#757575',
