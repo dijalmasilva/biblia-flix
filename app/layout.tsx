@@ -6,8 +6,8 @@ import MenuBar from "@/components/menu-bar/menu-bar";
 import ValidateUser from "@/components/validate-user/validate-user";
 import {Suspense} from "react";
 import LoadingPage from "@/app/loading";
-import {applyTheme, getInitialTheme} from "@/helpers/theme-helper/theme-helper";
 import Theme from "@/components/theme/theme";
+import PushNotification from "@/components/push-notification/push-notification";
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -32,14 +32,14 @@ export const viewport: Viewport = {
 }
 
 export default function RootLayout({
-                                     children,
-                                   }: {
+ children,
+}: {
   children: React.ReactNode
 }) {
-
   return (
     <html lang="pt-br">
     <Theme/>
+    <PushNotification oneSignalId={process.env.ONE_SIGNAL_ID || ''} />
     <body className={`${roboto.className} dark:bg-[#0a0a0a] dark:text-netflix-white bg-netflix-light-bg text-netflix-light-text`}>
     <div
       className="flex flex-col h-full justify-between">
